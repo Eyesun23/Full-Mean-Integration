@@ -5,13 +5,17 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 
 import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './login/login.component';
 
 
-const routes: Routes = [];
+const routes: Routes = [
+  {path: "", pathMatch: 'full', component: LoginComponent }
+];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
