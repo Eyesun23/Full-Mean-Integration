@@ -1,7 +1,4 @@
-TO USE THIS FOR YOUR PROJECT
 
-* git clone https://github.com/oscarvazquez/angularSkeleton.git <project_name>
-* cd <project_name>
 
 ## Dependencies
 
