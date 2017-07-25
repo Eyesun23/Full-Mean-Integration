@@ -1,36 +1,43 @@
-var mongoose = require('mongoose');
-// Importing User model, using mongoose getter method -- look at model page for more info
-var User = mongoose.model('User');
+var mongoose = require("mongoose");
+var User = mongoose.model("User");
+mongoose.Promise = global.Promise;
 
-function UsersController(){
-	this.index = function(req, res){
-		console.log('find function users controller /server/controllers/users.js');
-		User.find({}, function(err, users){
-			if(err){
-				console.log(err);
-				res.json({error: true, errors: err})
-			} else {
-				res.json(users);
-			}
-		})		
-	}
-	this.create = function(req, res){
-		console.log('fourth: create function users controller /server/controllers/users.js');		
-		User.create(req.body, function(err, user){
-			console.log("sending json back to user factory check browser console")				
-			if(err){
-				// console.log(err);
-				res.json({error: true, errors: err});
-			} else {
-				res.json(user);
-			}
-		})
-	}
-	this.show = function(req, res){
-		// retrieve single user
-		// this is how we retrieve the users id
-		console.log(req.body.id)
-	}
+
+function UsersController() {
+  this.register = function(req, res) {
+    console.log(req.body, "This is Controller");
+    User.findOne({username: req.body.username}, function (err, user){
+      if (err) {
+        res.status(500).json({message: "OOPS"});
+      } else {
+        if (user){
+          if(user.password == req.body.password){
+            res.json({user: user, message: "Authenticated"})
+          } else {
+            res.status(401).json({message: "Password doesn't match!"})
+          }
+        } else {
+            var user = new User(req.body)
+            user.save(function(err){
+              if(err){
+                console.log("error saving user", err);
+                res.status(500).json({message: "whoops"})
+            } else {
+                res.json({user: user, message: "created"})
+            }
+          })
+        }
+      }
+    })
+  }
 }
-
+this.show = function(req, res){
+  User.findOne({_id: req.params.id}, function (err, user){
+    if(err) {
+      res.status(500).json({message: "oops"})
+    } else {
+     res.json({user: user});
+    }
+  })
+}
 module.exports = new UsersController();

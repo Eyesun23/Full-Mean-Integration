@@ -1,0 +1,13 @@
+<h1>Dashboard</h1>
+<h2 *ngIf= "user">Hello, {{user.username}}</h2>
+
+<form (submit) = "createMessage()">
+  <label>Message</label>
+  <input type="text" name="message" [(ngModel)]="message.message">
+  <input type="submit" value="created new message">
+</form>
+
+<div *ngFor="let message of messages">
+  <h1>{{message.message}}</h1>
+  <h4>{{message.userId.username}}</h4>
+</div>

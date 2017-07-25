@@ -1,2 +1,8 @@
 <h1>Login Component</h1>
-<router-outlet></router-outlet>
+<form (submit)="register()">
+  <label>Username</label>
+  <input type="text" [(ngModel)]="user.username" name="username">
+  <label>Password</label>
+  <input type="text" [(ngModel)]="user.password" name="password">
+  <input type="submit" value = "Register or Login">
+</form>
